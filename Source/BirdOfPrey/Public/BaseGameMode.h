@@ -1,98 +1,81 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
-#include "SAgentInfo.h"
-#include "BaseGameAgent.generated.h"
+#include "GameFramework/GameModeBase.h"
+#include "BaseGameMode.generated.h"
 
-class ABaseWeapon;
+class AActor;
+class UDataTable;
+class ABasePowerup;
 
 UCLASS()
-class BIRDOFPREY_API ABaseGameAgent : public APawn
+class BIRDOFPREY_API ABaseGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
 public:
-	ABaseGameAgent();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
+	float WorldScrollSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	float MoveSpeed;
+	FVector2D MaxRelativePlayerOffset;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	ABaseWeapon* Weapon;
+	AActor* WorldCameraActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	TSubclassOf<ABaseWeapon> DefaultWeaponType;
+	UDataTable* PlayerAgentInfoTable;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	float Health;
+	float RespawnDelay;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	FSAgentInfo AgentInfo;
+	float SpawnOffset;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	float Points;
+	FTimerHandle StationarySpawnTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	bool bCheckForOutOfBounds;
+	FTimerHandle ShipSpawnTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	float OutOfBoundsCheckTolerance;
+	TArray<TSubclassOf<ABasePowerup>> PowerUpList;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	FName WeaponSocketName;
+	float PickUpSpawnPercent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	EAttachmentRule WeaponAttachRule;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	FVector TargetLocation;
+	bool IsGameOverScreen;
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void ChangeWeaponType();
+	float GetWorldScrollVelocity();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void GetWeaponSpawnTransform();
+	AActor* GetWorldCameraActor();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void SpawnDefaultWeapon();
+	void OnPlayerDied();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void StartFire();
+	void OnEnemyDied();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void StopFire();
+	void StartGame();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	virtual void ApplyAgentDamage();
+	void EndGame();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	bool IsAlive();
+	void SpawnEnemyFrom();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void Died();
+	void ResetGame();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void PlayHitEffects();
+	void RespawnPlayer();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void CleanUp();
+	void TrySpawnPowerUp();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void ApplyAgentInfo();
-
-	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void AimAt();
-
-	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void PlayDeathEffects();
-
-	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void CheckForOutOfBounds();
-
-protected:
-	virtual void BeginPlay() override;
-
-public:	
-	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	float GetDistanceTravelled();
 };

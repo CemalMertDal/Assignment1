@@ -1,98 +1,78 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
-#include "SAgentInfo.h"
-#include "BaseGameAgent.generated.h"
+#include "GameFramework/Actor.h"
+#include "BaseProjectile.generated.h"
 
-class ABaseWeapon;
+class UProjectileMovementComponent;
+class UCapsuleComponent;
+class UStaticMeshComponent;
+class UParticleSystem;
+class ABaseGameAgent;
+class USoundBase;
 
 UCLASS()
-class BIRDOFPREY_API ABaseGameAgent : public APawn
+class BIRDOFPREY_API ABaseProjectile : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	ABaseGameAgent();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
+	UProjectileMovementComponent* ProjectileMovement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	float MoveSpeed;
+	UCapsuleComponent* Capsule;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	ABaseWeapon* Weapon;
+	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	TSubclassOf<ABaseWeapon> DefaultWeaponType;
+	float ProjectileSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	float Health;
+	float Damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	FSAgentInfo AgentInfo;
+	UParticleSystem* DetonationEmitter;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	float Points;
+	float GroundUnitCheckDistance;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	bool bCheckForOutOfBounds;
+	float GroundUnitCheckAngle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	float OutOfBoundsCheckTolerance;
+	ABaseGameAgent* GroundTarget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	FName WeaponSocketName;
+	float DesiredZ;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	EAttachmentRule WeaponAttachRule;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	FVector TargetLocation;
+	USoundBase* ImpactSound;
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void ChangeWeaponType();
+	void InitialiseProjectile();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void GetWeaponSpawnTransform();
+	void DealDamageTo();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void SpawnDefaultWeapon();
+	void OnHit();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void StartFire();
+	void GetInstigatorCollisionChannel();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void StopFire();
+	void CheckForGroundUnitTarget();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	virtual void ApplyAgentDamage();
+	bool ShouldCheckForGroundTarget();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	bool IsAlive();
+	void AdjustToTarget();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void Died();
+	bool IsEnemyProjectile();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void PlayHitEffects();
-
-	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void CleanUp();
-
-	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void ApplyAgentInfo();
-
-	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void AimAt();
-
-	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void PlayDeathEffects();
-
-	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void CheckForOutOfBounds();
-
-protected:
-	virtual void BeginPlay() override;
-
-public:	
-	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void AdjustToDesiredZ();
 };
