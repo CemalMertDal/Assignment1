@@ -59,7 +59,7 @@ public:
 	void OnHit();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void GetInstigatorCollisionChannel();
+	TEnumAsByte<ECollisionChannel> GetInstigatorCollisionChannel();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
 	void CheckForGroundUnitTarget();

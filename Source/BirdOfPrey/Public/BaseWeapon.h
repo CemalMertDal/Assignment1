@@ -25,7 +25,7 @@ public:
 	void PlayFireEffects();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void GetFireEffectSpawnTransform();
+	FTransform GetFireEffectSpawnTransform();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
 	bool HasFinishedFiring();

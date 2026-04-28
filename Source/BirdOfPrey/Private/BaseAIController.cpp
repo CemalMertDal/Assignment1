@@ -1,7 +1,7 @@
 #include "BaseAIController.h"
 
 void ABaseAIController::SelectTarget() {}
-void ABaseAIController::AimAt() {}
+void ABaseAIController::AimAt(FVector AimTarget) {}
 void ABaseAIController::CheckFire() {}
 void ABaseAIController::UpdateAim() {}
 bool ABaseAIController::ShouldStartFire() { return false; }

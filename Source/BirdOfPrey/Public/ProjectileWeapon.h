@@ -30,10 +30,14 @@ public:
 	float DesiredZ;
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void SpawnProjectile();
+	ABaseProjectile* SpawnProjectile(FTransform SpawnTransform)
+	{
+
+		return nullptr;
+	}
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void GetProjectileSpawnTransform();
+	FTransform GetProjectileSpawnTransform();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
 	bool ReadyToFire();

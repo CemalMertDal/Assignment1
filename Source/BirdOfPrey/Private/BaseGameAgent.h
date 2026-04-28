@@ -6,6 +6,8 @@
 
 class ABaseWeapon;
 
+#pragma warning(push)
+#pragma warning(disable: 4263 4264)
 UCLASS()
 class BIRDOFPREY_API ABaseGameAgent : public APawn
 {
@@ -89,6 +91,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
 	void CheckForOutOfBounds();
 
+	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
+	virtual float TakeDamage(float Damage);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -96,3 +101,4 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };
+#pragma warning(pop)

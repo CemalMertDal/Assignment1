@@ -3,7 +3,7 @@
 void ABaseProjectile::InitialiseProjectile() {}
 void ABaseProjectile::DealDamageTo() {}
 void ABaseProjectile::OnHit() {}
-void ABaseProjectile::GetInstigatorCollisionChannel() {}
+TEnumAsByte<ECollisionChannel> ABaseProjectile::GetInstigatorCollisionChannel() { return ECC_WorldStatic; }
 void ABaseProjectile::CheckForGroundUnitTarget() {}
 bool ABaseProjectile::ShouldCheckForGroundTarget() { return false; }
 void ABaseProjectile::AdjustToTarget() {}

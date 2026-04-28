@@ -44,4 +44,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
 	bool ShouldUpdateAim();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
+	float LastFireTime;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
+	bool bIsFiring;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
+	float RefireDelay;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
+	bool bShouldUpdateAim;
 };

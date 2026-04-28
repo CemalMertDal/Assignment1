@@ -18,13 +18,13 @@ public:
 	float InvulnerabilityTime;
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void GetShipConstantVelocity();
+	void GetShipConstantVelocity(FVector& Direction, float& Speed);
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
 	void ClampToCameraBounds();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void GetShipAxisAdjustment();
+	float GetShipAxisAdjustment();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
 	void CalcOutOfBoundsAdjustment();
@@ -39,7 +39,7 @@ public:
 	void UpdateHoverPitch();
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	bool HasDiedRecently();
+	bool HasDiedRecently() const;
 
-	virtual void ApplyAgentDamage() override;
+	virtual float TakeDamage(float Damage) override;
 };

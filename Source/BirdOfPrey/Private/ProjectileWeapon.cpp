@@ -1,6 +1,5 @@
 #include "ProjectileWeapon.h"
 
-void AProjectileWeapon::SpawnProjectile() {}
-void AProjectileWeapon::GetProjectileSpawnTransform() {}
+FTransform AProjectileWeapon::GetProjectileSpawnTransform() { return FTransform(); }
 bool AProjectileWeapon::ReadyToFire() { return false; }
 bool AProjectileWeapon::IsFiring() { return false; }

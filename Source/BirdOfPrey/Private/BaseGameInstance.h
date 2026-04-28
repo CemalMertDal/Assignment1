@@ -4,8 +4,6 @@
 #include "SAgentInfo.h"
 #include "BaseGameInstance.generated.h"
 
-class APlayerController;
-
 UCLASS()
 class BIRDOFPREY_API UBaseGameInstance : public UGameInstance
 {
@@ -13,11 +11,11 @@ class BIRDOFPREY_API UBaseGameInstance : public UGameInstance
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
-	TMap<APlayerController*, FSAgentInfo> PlayerAgentInfo;
+	TArray<FSAgentInfo> PlayerAgentInfo;
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void SetPlayerAgentInfoFor();
+	void SetPlayerAgentInfoFor(int32 PlayerControllerID, FSAgentInfo AgentInfo);
 
 	UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-	void GetPlayerAgentInfoFor();
+	FSAgentInfo GetPlayerAgentInfoFor(int32 PlayerControllerID, bool& bSuccess);
 };
